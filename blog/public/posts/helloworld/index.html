@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>My very first post | PaperMod</title>
+<title>My very first post | faw121&#39;s blog</title>
 <meta name="keywords" content="blog">
 <meta name="description" content="hello first post">
 <meta name="author" content="faw121">
@@ -56,7 +56,7 @@
 
     </style>
 </noscript><meta property="og:url" content="http://localhost:1313/posts/helloworld/">
-  <meta property="og:site_name" content="PaperMod">
+  <meta property="og:site_name" content="faw121&#39;s blog">
   <meta property="og:title" content="My very first post">
   <meta property="og:description" content="hello first post">
   <meta property="og:locale" content="en">
@@ -102,8 +102,8 @@
   "keywords": [
     "blog"
   ],
-  "articleBody": "Getting Started ✨ How Does Things Work? Syntax Links This is a link to My Github.\nhttps://github.com/faw121\nExpansions Let’s play hide and seek.\nSecret Folder 1\rNot here!\rSecret Folder 2\rNo-no.\rSecret Folder 3\rYou found me!\rExpansion can be in code!\n1 2 3 you may notice there are line numbers... just use {linenos=true} See this\rSuprise!\rMaths? $ f(x)=\\sin{\\omega x + \\phi} $\n$$ f(x)=\\sin{\\omega x + \\phi} $$\n",
-  "wordCount" : "72",
+  "articleBody": "Getting Started ✨ How Does Things Work? Syntax Links This is a link to My Github.\nhttps://github.com/faw121\nExpansions Let’s play hide and seek.\nSecret Folder 1\rNot here!\rSecret Folder 2\rNo-no.\rSecret Folder 3\rYou found me!\rExpansion can be in code!\n1 2 3 you may notice there are line numbers... just use {linenos=true} See this\rSuprise!\rMaths 🎉 Follow the guide here to add math rendering.\nThis is an inline \\(a^*=x-b^*\\) equation. And this $f(x)=\\sin{\\omega x + \\phi}$.\nThese are also block equations:\n$$a^*=x-b^*$$$$ a^*=x-b^* $$Double-escape \\\\$ the symbol $:\nA \\$5 bill saved is a \\$5 bill earned.\nIn integral you should use \\mathrm{d} for $\\mathrm{d}x$.\n$$\r\\begin{align}\rI \u0026= \\iint\\limits_{\\Omega} {\\mathbf{n} \\cdot \\mathbf{w_{i}}} \\, \\mathrm{d}\\mathbf{w_{i}} \\\\\r\u0026=\\int_{0}^{2\\pi} \\int _{0}^{\\pi/2} {\\cos\\theta}\\, \\mathrm{d}\\theta \\, \\mathrm{d}\\phi \\\\\r\u0026= \\pi \\end{align}\r$$Try some matrix.\nAssume $M$ represents model transformation, then transformation matrix $Q$ for normal is:\n$$\rQ = (M^{-1})^{\\mathsf{T}}_{3\\times 3}\r$$Which transpose looks better?\n\\intercal : $M^{\\intercal}$\n\\top : $M^{\\top}$\n\\mathsf{T} : $M^{\\mathsf{T}}$\n",
+  "wordCount" : "165",
   "inLanguage": "en",
   "image": "http://localhost:1313/images/papermod-cover.png","datePublished": "2025-02-09T00:00:00Z",
   "dateModified": "2025-02-09T00:00:00Z",
@@ -117,7 +117,7 @@
   },
   "publisher": {
     "@type": "Organization",
-    "name": "PaperMod",
+    "name": "faw121's blog",
     "logo": {
       "@type": "ImageObject",
       "url": "http://localhost:1313/favicon.ico"
@@ -125,6 +125,20 @@
   }
 }
 </script>
+    
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath: [['\\(', '\\)'], ['$', '$']]                  
+    },
+    loader:{
+      load: ['ui/safe']
+    },
+  };
+</script>
+    
 </head>
 
 <body class="" id="top">
@@ -142,7 +156,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="PaperMod (Alt + H)">PaperMod</a>
+            <a href="http://localhost:1313/" accesskey="h" title="faw121&#39;s blog (Alt + H)">faw121&#39;s blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -164,16 +178,6 @@
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
-                <ul class="lang-switch"><li>|</li>
-                    <li>
-                        <a href="http://localhost:1313/fr/" title="French"
-                            aria-label=":fr:">🇫🇷</a>
-                    </li>
-                    <li>
-                        <a href="http://localhost:1313/fa/" title="Fa"
-                            aria-label="Fa">Fa</a>
-                    </li>
-                </ul>
             </div>
         </div>
         <ul id="menu">
@@ -238,7 +242,7 @@
                 <li>
                     <a href="#expansions" aria-label="Expansions">Expansions</a></li>
                 <li>
-                    <a href="#maths" aria-label="Maths?">Maths?</a>
+                    <a href="#maths-" aria-label="Maths 🎉">Maths 🎉</a>
                 </li>
             </ul>
             </li>
@@ -298,11 +302,28 @@
 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="maths">Maths?<a hidden class="anchor" aria-hidden="true" href="#maths">#</a></h3>
-<p>$ f(x)=\sin{\omega x + \phi} $</p>
-<p>$$
-f(x)=\sin{\omega x + \phi}
-$$</p>
+</div><h3 id="maths-">Maths 🎉<a hidden class="anchor" aria-hidden="true" href="#maths-">#</a></h3>
+<p>Follow the guide <strong><a href="https://gohugo.io/content-management/mathematics/">here</a></strong> to add math rendering.</p>
+<p>This is an inline \(a^*=x-b^*\) equation.
+And this $f(x)=\sin{\omega x + \phi}$.</p>
+<p>These are also block equations:</p>
+$$a^*=x-b^*$$$$ a^*=x-b^* $$<p>Double-escape <code>\\$</code> the symbol <code>$</code>:</p>
+<p>A \$5 bill <em>saved</em> is a \$5 bill <em>earned</em>.</p>
+<p>In integral you should use <code>\mathrm{d}</code> for $\mathrm{d}x$.</p>
+$$
+\begin{align}
+I &= \iint\limits_{\Omega} {\mathbf{n} \cdot \mathbf{w_{i}}} \, \mathrm{d}\mathbf{w_{i}}  \\
+  &=\int_{0}^{2\pi} \int _{0}^{\pi/2} {\cos\theta}\, \mathrm{d}\theta  \, \mathrm{d}\phi \\
+  &= \pi 
+\end{align}
+$$<p>Try some matrix.</p>
+<p>Assume $M$ represents model transformation, then transformation matrix $Q$ for normal is:</p>
+$$
+Q = (M^{-1})^{\mathsf{T}}_{3\times 3}
+$$<p>Which transpose looks better?</p>
+<p><code>\intercal</code> : $M^{\intercal}$</p>
+<p><code>\top</code> : $M^{\top}$</p>
+<p><code>\mathsf{T}</code> : $M^{\mathsf{T}}$</p>
 
 
   </div>
@@ -317,7 +338,7 @@ $$</p>
     </main>
     
 <footer class="footer">
-        <span>© <a href="https://github.com/adityatelange/hugo-PaperMod/graphs/contributors">PaperMod Contributors</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">faw121&#39;s blog</a></span> · 
 
     <span>
         Powered by
