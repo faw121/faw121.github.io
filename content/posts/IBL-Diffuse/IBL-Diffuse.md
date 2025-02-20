@@ -1,3 +1,14 @@
+---
+title: "IBL-Diffuse"
+summary: Generate irradiance map in SRP
+date: 2025-02-21
+params:
+  math: true
+weight: 1
+aliases: ["/IrradianceMap"]
+tags: ["IBL", "IrradianceMap", "Cubemap"]
+---
+
 ## Diffuse
 ### 原理
 $$
@@ -23,7 +34,6 @@ for each face
 UVSpace -> WorldSpace
 ![UVToWS](./img/UVToWS.png)
 
-#Cubemap
 注意轴方向和每个面的uv方向(左手系)
 ![[CubemapLeftHand.png|400]]
 ![UVToWS](./img/CubemapLeftHand.png)
