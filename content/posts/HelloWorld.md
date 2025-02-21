@@ -4,7 +4,7 @@ summary: hello first post
 date: 2025-02-09
 params:
   math: true
-weight: 1
+weight: 10
 aliases: ["/helloWorld"]
 tags: ["blog"]
 ---

@@ -1,13 +1,14 @@
 ---
-title: "IBL-Diffuse"
+title: "IBL Diffuse"
 summary: Generate irradiance map in SRP
-date: 2025-02-21
+date: 2025-02-20
 params:
   math: true
 weight: 1
 aliases: ["/IrradianceMap"]
 tags: ["IBL", "IrradianceMap", "Cubemap"]
 ---
+
 
 ## Diffuse
 ### 原理
@@ -17,7 +18,10 @@ L_{o} &= \iint \limits_{H} \frac{albedo}{\pi}L_{i}(w_{i})\cos{\theta_{i}} \, \ma
       &= \frac{albedo}{\pi}\iint \limits_{H} L_{i}(w_{i})\cos{\theta_{i}} \, \mathrm{d}w_{i}
 \end{align} 
 $$
-也就是 $EnvironmentDiffuse(\mathbf{p})=c_{d}Irradiance(\mathbf{p})$, $c_{d}=\frac{albedo}{\pi}$.
+
+也就是
+
+$EnvironmentDiffuse(\mathbf{p})=c_{d}\,Irradiance(\mathbf{p})$, $c_{d}=\frac{albedo}{\pi}$.
 
 后面这部分积分（IrradianceMap）是可以预计算到贴图中，做 shading 的时候直接查询的.
 
@@ -31,17 +35,20 @@ for each face
 ```
 
 对于 CubeMap 上的每一个像素点，要得到对应的世界坐标下的方向.
+
 UVSpace -> WorldSpace
-![UVToWS](./img/UVToWS.png)
+![UVToWS](images/UVToWS.png)
 
 注意轴方向和每个面的uv方向(左手系)
-![[CubemapLeftHand.png|400]]
-![UVToWS](./img/CubemapLeftHand.png)
+![CubemapLeftHand](images/CubemapLeftHand.png)
 
 #### Cosine-Weighted Sampling
 用 Monte Carlo 方法算积分，用 cosine 权重采样.
+
 采样点需要算好之后传给 Compute Shader.
+
 把 $\cos\theta_{i}$ 作为 $w_{i}$ 的 PDF（Probability Density Function） 的一部分，注意归一化: $\iint \limits_{H} \frac{1}{\pi}cos{\theta_{i}} \, \mathrm{d}w_{i} = 1$(半球上 $\cos\theta$ 的积分值是 pi).
+
 所以
 $$
 PDF(w_{i}) = \frac{1}{\pi} cos{\theta_{i}}
@@ -58,21 +65,22 @@ X = \pi L_{i}(w_{i})
 $$
 这个随机变量的均值即为估计的积分值.
 ##### Little Trick
-把 $\frac{albedo}{\pi}$ 的 $1 / \pi$ 也算入积分内，则抵消掉系数 $\pi$，也就是只需要求 $L_{i}(w_{i})$ 的均值就好了.
-最终的 environment diffuse term $= albedo \frac{1}{N}\sum\limits_{k=1}^{N}L_{i}(w_{k})$.
+把 $\frac{albedo}{\pi}$ 的 $1 / \pi$ 也算入积分内，则抵消掉系数 $\pi$，也就是**只需要求 $L_{i}(w_{i})$ 的均值**就好了.
+
+最终的 environmentDiffuseTerm $= albedo \frac{1}{N}\sum\limits_{k=1}^{N}L_{i}(w_{k})$.
+
 少个PI算出来的结果会暗很多.
-![WithoutPI](./img/WithoutPI.png)
-![WithPI](./img/WithPI.png)
+![WithoutPI](images/WithoutPI.png)
+![WithPI](images/WithPI.png)
 
 ##### Generate Cosine-Weighted Distribution
-![CosWeightedSampling](./img/CosWeightedSampling.png)
+![CosWeightedSampling](images/CosWeightedSampling.png)
 
 在 中心在$[0, 1, 0]$的单位球面上均一分布采样，然后把方向归一化，得到的就是 cosine-weighted 的方向.
-用此方法，只需**先得到一堆均一分布的 UnitVector 传入 Compute Shader**，在 Shader 里与 Normal 相加再归一化，得到最终的采样方向.
+用此方法，只需**先得到一堆均一分布的 UnitVector 传入 Compute Shader**，在 Shader 里与 Normal 相加再归一化 (同时完成了 TangentSpace -> WorldSpace)，得到最终的采样方向.
 #### Compute Shader
 用 2D Array 类型的 RenderTexture 放计算结果，然后再 Copy 到 新创建的 CubeMap 里去.（没搞明白怎么直接写到 Cubemap 类型的RT。。）
-![[ResultRT.png|300]]
-![ResultRT](./img/ResultRT.png)
+![ResultRT](images/ResultRT.png)
 
 
 ##### IrradianceMapShader.compute
@@ -310,15 +318,15 @@ public class ComputeIrradianceMap
 }
 
 ```
-##### Results
+### Results
 无环境光
-![WithoutEnvironmentDiffuse](./img/WithoutEnvironmentDiffuse.png)
+![WithoutEnvironmentDiffuse](images/WithoutEnvironmentDiffuse.png)
 
 只有 Environment Diffuse
-![EnvDiffuseOnly](./img/EnvDiffuseOnly.png)
+![EnvDiffuseOnly](images/EnvDiffuseOnly.png)
 
 DirectLight + EnvironmentDiffuse
-![WithtEnvironmentDiffuse](./img/WithEnvironmentDiffuse.png)
+![WithtEnvironmentDiffuse](images/WithEnvironmentDiffuse.png)
 
 
 ## Reference
