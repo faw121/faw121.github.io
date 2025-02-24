@@ -1,6 +1,6 @@
 ---
 title: "IBL Diffuse"
-summary: Generate irradiance map in SRP
+summary: Use ComputeShader to generate IrradianceMap in SRP
 date: 2025-02-20
 params:
   math: true
@@ -10,8 +10,7 @@ tags: ["IBL", "IrradianceMap", "Cubemap"]
 ---
 
 
-## Diffuse
-### 原理
+## 原理
 $$
 \begin{align}
 L_{o} &= \iint \limits_{H} \frac{albedo}{\pi}L_{i}(w_{i})\cos{\theta_{i}} \, \mathrm{d}w_{i} \\
@@ -25,7 +24,7 @@ $EnvironmentDiffuse(\mathbf{p})=c_{d}\,Irradiance(\mathbf{p})$, $c_{d}=\frac{alb
 
 后面这部分积分（IrradianceMap）是可以预计算到贴图中，做 shading 的时候直接查询的.
 
-### Irradiance Map Implementation in SRP
+## Irradiance Map Implementation in SRP
 用 Compute Shader 计算 Irradiance Map (六个面).
 ```
 for each face
@@ -42,7 +41,7 @@ UVSpace -> WorldSpace
 注意轴方向和每个面的uv方向(左手系)
 ![CubemapLeftHand](images/CubemapLeftHand.png)
 
-#### Cosine-Weighted Sampling
+### Cosine-Weighted Sampling
 用 Monte Carlo 方法算积分，用 cosine 权重采样.
 
 采样点需要算好之后传给 Compute Shader.
@@ -64,7 +63,7 @@ $$
 X = \pi L_{i}(w_{i})
 $$
 这个随机变量的均值即为估计的积分值.
-##### Little Trick
+#### Little Trick
 把 $\frac{albedo}{\pi}$ 的 $1 / \pi$ 也算入积分内，则抵消掉系数 $\pi$，也就是**只需要求 $L_{i}(w_{i})$ 的均值**就好了.
 
 最终的 environmentDiffuseTerm $= albedo \frac{1}{N}\sum\limits_{k=1}^{N}L_{i}(w_{k})$.
@@ -73,17 +72,17 @@ $$
 ![WithoutPI](images/WithoutPI.png)
 ![WithPI](images/WithPI.png)
 
-##### Generate Cosine-Weighted Distribution
+#### Generate Cosine-Weighted Distribution
 ![CosWeightedSampling](images/CosWeightedSampling.png)
 
 在 中心在$[0, 1, 0]$的单位球面上均一分布采样，然后把方向归一化，得到的就是 cosine-weighted 的方向.
 用此方法，只需**先得到一堆均一分布的 UnitVector 传入 Compute Shader**，在 Shader 里与 Normal 相加再归一化 (同时完成了 TangentSpace -> WorldSpace)，得到最终的采样方向.
-#### Compute Shader
+### Compute Shader
 用 2D Array 类型的 RenderTexture 放计算结果，然后再 Copy 到 新创建的 CubeMap 里去.（没搞明白怎么直接写到 Cubemap 类型的RT。。）
 ![ResultRT](images/ResultRT.png)
 
 
-##### IrradianceMapShader.compute
+#### IrradianceMapShader.compute
 ```C
 #pragma kernel CSMain
 
@@ -237,7 +236,7 @@ void CSMain (uint3 dispatchThreadID : SV_DispatchThreadID)
 }
 
 ```
-##### ComputeIrradianceMap.cs
+#### ComputeIrradianceMap.cs
 ```c#
 using UnityEngine;
 using UnityEditor;
@@ -318,7 +317,7 @@ public class ComputeIrradianceMap
 }
 
 ```
-### Results
+## Results
 无环境光
 ![WithoutEnvironmentDiffuse](images/WithoutEnvironmentDiffuse.png)
 
@@ -332,4 +331,4 @@ DirectLight + EnvironmentDiffuse
 ## Reference
 - [Real Shading in Unreal Engine 4](https://cdn2.unrealengine.com/Resources/files/2013SiggraphPresentationsNotes-26915738.pdf)
 - https://zhuanlan.zhihu.com/p/463309766
-- https://zznewclear13.github.io/posts/calculate-spherical-harmonics-using-compute-shader/#calculateharmonicscs
+- https://zznewclear13.github.io/posts/calculate-spherical-harmonics-using-compute-shader
